@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Q New Restaurant</title>
-</head>
+  <head>
+    <title>Q New Restaurant</title>
+  </head>
 <body>
   <h1>New Restaurant Sign Up</h1>
-  <form method = "post" action ="/">
+  <form method="post" action ="/">
     Name of Restaurant: <br>
-    <input type = "text" name = "name_r">
+    <input type="text" name="name_r">
     <br>
     Phone Number: <br>
-    <input type = "text" name = "phone_r">
+    <input type="text" name="phone_r">
     <br>
     Street Address: <br>
-    <input type = "text" name = "address1">
+    <input type="text" name="address1">
     <br>
     City: <br>
-    <input type = "text" name = "address2">
+    <input type="text" name="address2">
     <br>
     State: <br>
-    <input type = "text" name = "address3">
+    <input type="text" name="address3">
     <br>
-
     Zip Code: <br>
-    <input type = "text" name = "address4">
+    <input type="text" name="address4">
     <br>
 
-    <input type = "submit" value= "Submit">
+    <div class="table">
+      <input type="integer" name="num_table_type" class="numTabType"/>
+
+    </div>
+
+
+    <input type="submit" value= "Submit">
 
 
 
   </form>
+  <script src="/static/restaurant_new.js" /></script>
 </body>
+
 </html>
