@@ -3,14 +3,7 @@ import json
 from google.appengine.api import users
 from twilio.rest import Client
 
-user = users.get_current_user()
-if user:
-    nickname = user.nickname()
-    logout_url = users.create_logout_url('/')
-    greeting = ('Welcome, %s! (<href="%s">Sign out</a>)' % (nickname, logout_url))
-else
-    login_url = users.create_login_url('/')
-    greeting = '<href="%s">Sign in</a>' % )login_url,)
+
 account_sid = "ACfe3c09107ca923f7c8425fc58cbf0fc4"
 auth_token = "e32ae179c853e667d8f5fc135d89c0aa"
 client = Client(account_sid, auth_token)
@@ -27,8 +20,20 @@ print(message.sid)
 class MainPage(webapp2.RequestHandler):
     def get(self):
 
+class LoginPage(webapp2.RequestHandler):
+    def post(self):
+        user = user.get_current_user()
+        if user:
+            nickname = user.nickname()
+            logout_url = user.nickname()
+            greeting = ('Welcome, %s! (<a href="%s">sign out</a>)'
+              % (nickname, logout_url))
+        else:
+            login_url = users.create_login_url('/')
+            greeting = '<a href="%s">Sign in</a>' % (login_url,)
 
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
+    ('/login', LoginPage)
 ], debug=True)
