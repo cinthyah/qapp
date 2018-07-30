@@ -6,3 +6,6 @@ handlers:
   - url:/.*
     script: main.app
     login: optional
+
+ - url: /static
+   static_dir: static 
