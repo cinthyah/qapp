@@ -3,7 +3,7 @@ import json
 import jinja2
 import os
 from google.appengine.api import users
-from models import Event
+from google.appengine.ext import ndb
 #from twilio.rest import Client
 
 
@@ -22,23 +22,33 @@ from models import Event
 
 #class MainPage(webapp2.RequestHandler):
     #def get(self):
+user =users.get_current_user()
+
+if user:
+    logout_url = users.create_logout_url('/')
+    greeting = ('Welcome! (<a href = "%s"> sign out</a>)'% logout_url)
+else:
+    login_url = users.create_login_url('/')
+    greeting = '<a href ="%s">Sign in</a>'%(login_url,)
 
 jinja_current_directory= jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-class LoginPage(webapp2.RequestHandler):
+class EnterInfoHandler(webapp2.RequestHandler):
     def get(self):
-        user = users.get_current_user()
-        if user:
-            template = Event.query().fetch()
-            add_template=jinja_current_Directory.get_template('templates/restaurant_new.html')
-            self.response.write(add_template.render({'templates': templates}))
-        else:
-            login_prompt_template = jinja_current_directory.get_template('templates/login2.html')
-            self.response.write(login_prompt_template.render({'login_link': users.create_login_url('/')}))
+        welcome_template = jinja_current_directory.get_template('templates/restaurant_new.html')
+        self.response.write(welcome_template.render())
+user.user_id()
+
+class Event(ndb.Model):
+    organizer = ndb.StringProperty(required = True)
+    title = ndb.StringProperty(required = True)
+
+Event(organizer = user.user_id(), title = "CSSI Presentations")
+
 
 app = webapp2.WSGIApplication([
-    ('/', LoginPage)
+    ('/', EnterInfoHandler)
 ], debug=True)
