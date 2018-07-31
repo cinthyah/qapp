@@ -5,7 +5,7 @@ user.user_id()
 class Event(ndb.Model):
     organizer = ndb.StringProperty(required=True)
     title = ndb.StringPRoperty(required=True)
-    ...
+
 
 
 class Restaurant(ndb.model):
