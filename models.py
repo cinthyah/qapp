@@ -4,7 +4,6 @@ from google.appengine.ext import ndb
 class Event(ndb.Model):
     organizer = ndb.StringProperty(required=True)
     title = ndb.StringProperty(required=True)
-    ...
 
 
 class Restaurant(ndb.Model):
@@ -17,7 +16,8 @@ class Restaurant(ndb.Model):
 
 class Table(ndb.Model):
     description = ndb.StringProperty(required=True)
-    size = ndb.StringProperty(required=True)
+    max= ndb.StringProperty(required=True)
+    min=ndb.StringProperty(required=False)
     restaurant_id = ndb.KeyProperty(Restaurant)
     full? = ndb.BooleanProperty(required=True)
     time_filled = ndb.DateTimeProperty(required=False)
