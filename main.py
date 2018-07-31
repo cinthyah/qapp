@@ -3,7 +3,7 @@ import json
 import jinja2
 import os
 from google.appengine.api import users
-from models import Event
+import models
 #from twilio.rest import Client
 
 
@@ -33,12 +33,27 @@ class LoginPage(webapp2.RequestHandler):
         user = users.get_current_user()
         if user:
             template = Event.query().fetch()
-            add_template=jinja_current_Directory.get_template('templates/restaurant_new.html')
-            self.response.write(add_template.render({'templates': templates}))
+            self.redirect('/new_rest')
         else:
             login_prompt_template = jinja_current_directory.get_template('templates/login2.html')
             self.response.write(login_prompt_template.render({'login_link': users.create_login_url('/')}))
 
+class RestNewHandler(webapp2.RequestHandler):
+    def get(self):
+        new_r_template=jinja_current_directory.get_template("templates/restaurant_new.html")
+        self.response.write(new_r_template.render({'templates': templates}))
+
+    def post(self):
+        Restaurant(name = self.request.get('name_r'),
+            phone = self.request.get('phone_r'),
+            street_address= self.request.get('street'),
+            city = self.request.get('city'),
+            state = self.request.get('state'),
+            zip_code = self.request.get('zip'),
+        ).put()
+
+
 app = webapp2.WSGIApplication([
-    ('/', LoginPage)
+    ('/', LoginPage),
+    ('/new_rest', RestNewHandler),
 ], debug=True)
