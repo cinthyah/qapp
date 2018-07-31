@@ -37,7 +37,7 @@ class LoginHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         if user:
             url = users.create_logout_url('/')
-
+            
         else:
             url = users.create_login_url('/')
         new_r_template=jinja_current_directory.get_template("templates/login2.html")
