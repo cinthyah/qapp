@@ -23,12 +23,13 @@ import models
 #class MainPage(webapp2.RequestHandler):
     #def get(self):
 
+
 jinja_current_directory= jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-class LoginPage(webapp2.RequestHandler):
+class EnterInfoHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
@@ -54,6 +55,6 @@ class RestNewHandler(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', LoginPage),
+    ('/', EnterInfoHandler),
     ('/new_rest', RestNewHandler),
 ], debug=True)
