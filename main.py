@@ -37,7 +37,7 @@ class LoginHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         if user:
             url = users.create_logout_url('/')
-            
+
         else:
             url = users.create_login_url('/')
         new_r_template=jinja_current_directory.get_template("templates/login2.html")
@@ -57,8 +57,13 @@ class RestNewHandler(webapp2.RequestHandler):
             zip_code = self.request.get('zip'),
         ).put()
 
+class LoadDataHandler(webapp2.RequestHandler):
+    def get(self):
+        seed_q.seed_data()
+
 
 app = webapp2.WSGIApplication([
     ('/',LoginHandler),
     ('/new_rest', RestNewHandler),
+    ('/seed-data', LoadDataHandler),
 ], debug=True)
