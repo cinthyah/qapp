@@ -3,7 +3,7 @@ import json
 import jinja2
 import os
 from google.appengine.api import users
-from google.appengine.ext import ndb
+import models
 #from twilio.rest import Client
 
 
@@ -22,14 +22,7 @@ from google.appengine.ext import ndb
 
 #class MainPage(webapp2.RequestHandler):
     #def get(self):
-user =users.get_current_user()
 
-if user:
-    logout_url = users.create_logout_url('/')
-    greeting = ('Welcome! (<a href = "%s"> sign out</a>)'% logout_url)
-else:
-    login_url = users.create_login_url('/')
-    greeting = '<a href ="%s">Sign in</a>'%(login_url,)
 
 jinja_current_directory= jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -38,17 +31,30 @@ jinja_current_directory= jinja2.Environment(
 
 class EnterInfoHandler(webapp2.RequestHandler):
     def get(self):
-        welcome_template = jinja_current_directory.get_template('templates/restaurant_new.html')
-        self.response.write(welcome_template.render())
-user.user_id()
+        user = users.get_current_user()
+        if user:
+            template = Event.query().fetch()
+            self.redirect('/new_rest')
+        else:
+            login_prompt_template = jinja_current_directory.get_template('templates/login2.html')
+            self.response.write(login_prompt_template.render({'login_link': users.create_login_url('/')}))
 
-class Event(ndb.Model):
-    organizer = ndb.StringProperty(required = True)
-    title = ndb.StringProperty(required = True)
+class RestNewHandler(webapp2.RequestHandler):
+    def get(self):
+        new_r_template=jinja_current_directory.get_template("templates/restaurant_new.html")
+        self.response.write(new_r_template.render({'templates': templates}))
 
-Event(organizer = user.user_id(), title = "CSSI Presentations")
+    def post(self):
+        Restaurant(name = self.request.get('name_r'),
+            phone = self.request.get('phone_r'),
+            street_address= self.request.get('street'),
+            city = self.request.get('city'),
+            state = self.request.get('state'),
+            zip_code = self.request.get('zip'),
+        ).put()
 
 
 app = webapp2.WSGIApplication([
-    ('/', EnterInfoHandler)
+    ('/', EnterInfoHandler),
+    ('/new_rest', RestNewHandler),
 ], debug=True)
