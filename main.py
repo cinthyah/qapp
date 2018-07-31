@@ -29,20 +29,24 @@ jinja_current_directory= jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-class EnterInfoHandler(webapp2.RequestHandler):
+
+
+
+class LoginHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
-            template = Event.query().fetch()
-            self.redirect('/new_rest')
+            url = users.create_logout_url('/')
+
         else:
-            login_prompt_template = jinja_current_directory.get_template('templates/login2.html')
-            self.response.write(login_prompt_template.render({'login_link': users.create_login_url('/')}))
+            url = users.create_login_url('/')
+        new_r_template=jinja_current_directory.get_template("templates/login2.html")
+        self.response.write(new_r_template.render({'url':url}))
 
 class RestNewHandler(webapp2.RequestHandler):
     def get(self):
         new_r_template=jinja_current_directory.get_template("templates/restaurant_new.html")
-        self.response.write(new_r_template.render({'templates': templates}))
+        self.response.write(new_r_template.render())
 
     def post(self):
         Restaurant(name = self.request.get('name_r'),
@@ -55,6 +59,6 @@ class RestNewHandler(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', EnterInfoHandler),
+    ('/',LoginHandler),
     ('/new_rest', RestNewHandler),
 ], debug=True)
