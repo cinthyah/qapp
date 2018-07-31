@@ -13,6 +13,7 @@ class Restaurant(ndb.Model):
     city = ndb.StringProperty(required=True)
     state = ndb.StringProperty(required=True)
     zip_code = ndb.StringProperty(required=True)
+    user = ndb.StringProperty(required=True)
 
 class Table(ndb.Model):
     description = ndb.StringProperty(required=True)
