@@ -96,6 +96,7 @@ class RestNewHandler(webapp2.RequestHandler):
             time_filled = datetime.datetime.now(),
         ).put()
 
+
 class CustNewHandler(webapp2.RequestHandler):
     def get(self):
         new_r_template=jinja_current_directory.get_template("templates/add_customer.html")
@@ -129,10 +130,16 @@ class TablesHandler(webapp2.RequestHandler):
     def post(self):
         pass
 
+class LoadDataHandler(webapp2.RequestHandler):
+    def get(self):
+        seed_q.seed_data()
+
+
 
 app=webapp2.WSGIApplication([
     ('/',LoginHandler),
     ('/new_rest', RestNewHandler),
     ('/new_cust', CustNewHandler),
     ('/tables', TablesHandler)
+    ('/seed-data', LoadDataHandler),
 ], debug=True)
