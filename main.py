@@ -53,7 +53,7 @@ class LoginHandler(webapp2.RequestHandler):
 
 class HomeHandler(webapp2.RequestHandler):
     def get(self):
-
+        pass
 
 
 class RestNewHandler(webapp2.RequestHandler):
@@ -77,7 +77,7 @@ class RestNewHandler(webapp2.RequestHandler):
             min = self.request.get('table_size_min'),
             #restaurant_id = self.request.get(),
             full = False,
-            time_filled = datetime.now(),
+            time_filled = datetime.datetime.now(),
         ).put()
 
 
