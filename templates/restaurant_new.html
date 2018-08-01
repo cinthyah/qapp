@@ -1,44 +1,46 @@
 <!DOCTYPE html>
 <html>
+<center>
   <head>
-    <title>Q New Restaurant</title>
+    <title> Q New Restaurant </title>
   </head>
 <body>
-  <h1>New Restaurant Sign Up</h1>
-  <form method="post" action ="/new_rest">
-    Name of Restaurant: <br>
+  <h1><font color="red"> New Restaurant Sign Up </font> </h1>
+  <form method="post" action ="/tables">
+    <font color="blue">Name of Restaurant: </font> <br>
     <input type="text" name="name_r">
     <br>
-    Phone Number: <br>
+    <font color="blue">Phone Number:</font> <br>
     <input type="text" name="phone_r">
     <br>
-    <h3>Address</h3>
-    Street Address: <br>
+    <h3> <font color="green">Address </font> </h3>
+    <font color="blue">Street Address: </font> <br>
     <input type="text" name="street">
     <br>
-    City: <br>
+    <font color="blue">City: </font> <br>
     <input type="text" name="city">
     <br>
-    State: <br>
+    <font color="blue">State: </font> <br>
     <input type="text" name="state">
     <br>
-    Zip Code: <br>
+    <font color="blue">Zip Code: </font> <br>
     <input type="text" name="zip">
     <br>
-    <h3>Tables</h3>
+    <h3><font color="green">Tables </font> </h3>
     <div id="container">
-      Description of table (outside, inside, booth, etc.): <input type="text" name="table_description" id="TabType"/>
+      <font color="blue">Description of table (outside, inside, booth, etc.): </font> <input type="text" name="table_description" id="TabType"/>
       <br>
-      Max party size: <input type="integer" name="table_size_max" id="TabType"/>
+      <font color="blue">Max party size: </font> <input type="integer" name="table_size_max" id="TabType"/>
       <br>
-      Min party size: <input type="integer" name="table_size_min" id="TabType"/>
+      <font color="blue">Min party size:</font> <input type="integer" name="table_size_min" id="TabType"/>
       <br>
 
 
-    <input type="submit" value= "Submit">
+    <input type="submit" value="Submit" action="http://localhost:8080/tables">
 
   </form>
   <script src="/static/restaurant_new.js" /></script>
+  <body style= "background-color:powderblue;">
 </body>
-
+</center>
 </html>
