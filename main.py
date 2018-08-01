@@ -63,7 +63,7 @@ class RestNewHandler(webapp2.RequestHandler):
 
     def post(self):
         user = users.get_current_user()
-        models.Restaurant(name = self.request.get('name_r'),
+        Restaurant(name = self.request.get('name_r'),
             phone = self.request.get('phone_r'),
             street_address = self.request.get('street'),
             city = self.request.get('city'),
@@ -72,7 +72,7 @@ class RestNewHandler(webapp2.RequestHandler):
             user = user.email(),
         ).put()
 
-        models.Table(description = self.request.get('table_description'),
+        Table(description = self.request.get('table_description'),
             max = self.request.get('table_size_max'),
             min = self.request.get('table_size_min'),
             #restaurant_id = self.request.get(),
