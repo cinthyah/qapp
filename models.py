@@ -28,3 +28,4 @@ class Wait(ndb.Model):
     party_size = ndb.StringProperty(required=True)
     restaurant_key = ndb.KeyProperty(Restaurant)
     table_type = ndb.KeyProperty(Table)
+    time = ndb.DateTimeProperty(required=False)

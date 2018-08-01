@@ -104,10 +104,11 @@ class CustNewHandler(webapp2.RequestHandler):
 
     def post(self):
         Wait(customer = self.request.get('c_name'),
-        phone = self.request.get('c_number'),
-        party_size = self.request.get('c_party'),
-        #restaurant_key = self.request.get('INSERT'),
-        #table_type = self.request.get('INSERT'),
+            phone = self.request.get('c_number'),
+            party_size = self.request.get('c_party'),
+            #restaurant_key = self.request.get('INSERT'),
+            #table_type = self.request.get('INSERT'),
+            time = datetime.datetime.now(),
         ).put()
 
 class TablesHandler(webapp2.RequestHandler):
