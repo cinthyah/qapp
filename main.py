@@ -138,19 +138,19 @@ class LoadDataHandler(webapp2.RequestHandler):
 
 class ActiveQHandler(webapp2.RequestHandler):
     def get (self):
-        user = self.request.get_current_user()
+        user = users.get_current_user()
         restaurant = Restaurant.query(Restaurant.user == user.email()).fetch()
         if restaurant:
-             restaurant = restaurant[0]
-             waits = Wait.query(Wait.restaurant_key == restaurant.key).order().fetch()
-             template_vars = {
-                "waits" : waits,
-                "restaurant":restaurant,
+            restaurant = restaurant[0]
+            waits = Wait.query(Wait.restaurant_key == restaurant.key).order().fetch()
+            template_vars = {
+            "waits" : waits,
+            "restaurant":restaurant,
              }
-             activeq_template = jinja_current_directory.get_template("templates/active_q.html")
-             self.response.write(activeq_template.render(template_vars))
-         else:
-             self.response.write(users.create_logout_url('/'))
+            activeq_template = jinja_current_directory.get_template("templates/active_q.html")
+            self.response.write(activeq_template.render(template_vars))
+        else:
+            self.response.write(users.create_logout_url('/'))
 
 class DeleteWaitHandler(webapp2.RequestHandler):
     def get(self):
