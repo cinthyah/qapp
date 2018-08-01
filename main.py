@@ -135,6 +135,17 @@ class LoadDataHandler(webapp2.RequestHandler):
     def get(self):
         seed_q.seed_data()
 
+class ActiveQHandler(webapp2.RequestHandler):
+    def get (self):
+        customer = self.request.get('customer')
+        customer_query = Wait.query(Wait.customer == customer_q).order().fetch()
+        template_vars = {
+        "customers" : customer_query
+        }
+        activeq_template = jinja_current_directory.get_template("templates/active_q")
+        self.response.write(activeq_template.render(template_vars))
+
+
 
 
 app=webapp2.WSGIApplication([
@@ -143,4 +154,5 @@ app=webapp2.WSGIApplication([
     ('/new_cust', CustNewHandler),
     ('/tables', TablesHandler)
     ('/seed-data', LoadDataHandler),
+    ('/a_queue', ActiveQHandler),
 ], debug=True)
