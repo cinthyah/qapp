@@ -96,9 +96,43 @@ class RestNewHandler(webapp2.RequestHandler):
             time_filled = datetime.datetime.now(),
         ).put()
 
+class CustNewHandler(webapp2.RequestHandler):
+    def get(self):
+        new_r_template=jinja_current_directory.get_template("templates/add_customer.html")
+        self.response.write(new_r_template.render())
+
+    def post(self):
+        Wait(customer = self.request.get('c_name'),
+        phone = self.request.get('c_number'),
+        party_size = self.request.get('c_party'),
+        #restaurant_key = self.request.get('INSERT'),
+        #table_type = self.request.get('INSERT'),
+        ).put()
+
+class TablesHandler(webapp2.RequestHandler):
+    def get(self):
+        new_r_template=jinja_current_directory.get_template("templates/tables.html")
+        self.response.write(new_r_template.render())
+        #get key of current restuaruant
+        r_key=Restaurant.query(Restaurant.user == user_email).fetch()[0].key
+        #fetch all tables that belong to this restaurant from Datastore (ordered by # seats at table)
+        r_tables=Table.query(Table.restaurant_id == r_key).order(Table.max).fetch()
+        #create empty dictionary table seats
+        table_seats= {}
+        #run through r_tables appending key value pairs of table number and max seats available per table
+        table_n=0
+        for table in r_tables:
+            n= n+1
+            table_seats['Table'+ n]=table.max
+        #render html of queue
+
+    def post(self):
+        pass
+
 
 app=webapp2.WSGIApplication([
     ('/',LoginHandler),
-    ('/r_queue', QueueHandler),
     ('/new_rest', RestNewHandler),
+    ('/new_cust', CustNewHandler),
+    ('/tables', TablesHandler)
 ], debug=True)
