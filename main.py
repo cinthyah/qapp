@@ -96,9 +96,14 @@ class RestNewHandler(webapp2.RequestHandler):
             time_filled = datetime.datetime.now(),
         ).put()
 
+class LoadDataHandler(webapp2.RequestHandler):
+    def get(self):
+        seed_q.seed_data()
+
 
 app=webapp2.WSGIApplication([
     ('/',LoginHandler),
     ('/r_queue', QueueHandler),
     ('/new_rest', RestNewHandler),
+    ('/seed-data', LoadDataHandler),
 ], debug=True)
