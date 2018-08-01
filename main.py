@@ -152,7 +152,7 @@ app=webapp2.WSGIApplication([
     ('/',LoginHandler),
     ('/new_rest', RestNewHandler),
     ('/new_cust', CustNewHandler),
-    ('/tables', TablesHandler)
+    ('/tables', TablesHandler),
     ('/seed-data', LoadDataHandler),
     ('/a_queue', ActiveQHandler),
 ], debug=True)
