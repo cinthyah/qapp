@@ -115,7 +115,7 @@ class TablesHandler(webapp2.RequestHandler):
         new_r_template=jinja_current_directory.get_template("templates/tables.html")
         self.response.write(new_r_template.render())
         #get key of current restuaruant
-        r_key=Restaurant.query(Restaurant.user == user_email).fetch()[0].key
+        r_key=Restaurant.query(Restaurant.user == user_email).fetch()[0].key #GETTING ERRORS FROM user_email
         #fetch all tables that belong to this restaurant from Datastore (ordered by # seats at table)
         r_tables=Table.query(Table.restaurant_id == r_key).order(Table.max).fetch()
         #create empty dictionary table seats
