@@ -7,11 +7,11 @@ import models
 #from twilio.rest import Client
 
 
-#account_sid = "ACfe3c09107ca923f7c8425fc58cbf0fc4"
-#auth_token = "e32ae179c853e667d8f5fc135d89c0aa"
-#client = Client(account_sid, auth_token)
+#account_sid="ACfe3c09107ca923f7c8425fc58cbf0fc4"
+#auth_token="e32ae179c853e667d8f5fc135d89c0aa"
+#client=Client(account_sid, auth_token)
 
-#message = client.messages.create(
+#message=client.messages.create(
                               #body='Your table will be ready in five minutes',
                               #from_='17472325261',
                               #to='13107176463'#have to add variable here
@@ -34,12 +34,12 @@ jinja_current_directory= jinja2.Environment(
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
-        user = users.get_current_user()
+        user=users.get_current_user()
         #if statement that checks if user is logged in via google
         if user:
-            log_url = users.create_logout_url('/')
+            log_url=users.create_logout_url('/')
             #check if user is in Restaurant Datastore already/is a returning user
-            user_email = user.user_email()
+            user_email=user.email()
             rest_query =Restaurant.query(Restaurant.user == user_email).fetch()
             #if user email is in Restaurant Datastore go to home page/ else send to new restaurant handler
             if rest_query[0].user != None :
@@ -48,14 +48,28 @@ class LoginHandler(webapp2.RequestHandler):
                 self.redirect('/new_rest')
         #if user not logged into google, generates login
         else:
-            log_url = users.create_login_url('/')
+            log_url=users.create_login_url('/')
         #renders login2 html page with link to login url for unlogged in users
         login_template=jinja_current_directory.get_template("templates/login2.html")
         self.response.write(login_template.render({'log_url': log_url}))
 
+
 class QueueHandler(webapp2.RequestHandler) :
     def get(self):
-
+        #get key of current restuaruant
+        r_key=Restaurant.query(Restaurant.user == user_email).fetch()[0].key
+        #fetch all tables that belong to this restaurant from Datastore (ordered by # seats at table)
+        r_tables=Table.query(Table.restaurant_id == r_key).order(Table.max).fetch()
+        #create empty dictionary table seats
+        table_seats= {}
+        #run through r_tables appending key value pairs of table number and max seats available per table
+        table_n=0
+        for table in r_tables:
+            n= n+1
+            table_seats['Table'+ n]=table.max
+        #render html of queue
+        queue_template=jinja_current_directory.get_template('templates/active_q.html')
+        self.response.write(login_template.render(table_seats))
 
 
 class RestNewHandler(webapp2.RequestHandler):
@@ -66,19 +80,19 @@ class RestNewHandler(webapp2.RequestHandler):
 
     def post(self):
         #creates new Restaurant item upon post request to /new_rest url and adds to Datastore
-        user = users.get_current_user()
-        Restaurant(name = self.request.get('name_r'),
-            phone = self.request.get('phone_r'),
-            street_address = self.request.get('street'),
-            city = self.request.get('city'),
-            state = self.request.get('state'),
-            zip_code = self.request.get('zip'),
-            user = user.user_email(),
+        user=users.get_current_user()
+        Restaurant(name=self.request.get('name_r'),
+            phone=self.request.get('phone_r'),
+            street_address=self.request.get('street'),
+            city=self.request.get('city'),
+            state=self.request.get('state'),
+            zip_code=self.request.get('zip'),
+            user=user.user_email(),
         ).put()
 
 
 
-app = webapp2.WSGIApplication([
+app=webapp2.WSGIApplication([
     ('/',LoginHandler),
     ('/r_queue', QueueHandler),
     ('/new_rest', RestNewHandler),
