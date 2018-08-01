@@ -46,11 +46,12 @@ class LoginHandler(webapp2.RequestHandler):
                 self.redirect('/r_home')
             else:
                 self.redirect('/new_rest')
-
+        #if user not logged into google, generates login
         else:
             log_url = users.create_login_url('/')
-        new_r_template=jinja_current_directory.get_template("templates/login2.html")
-        self.response.write(new_r_template.render({'log_url': log_url}))
+        #renders login2 html page with link to login url for unlogged in users
+        login_template=jinja_current_directory.get_template("templates/login2.html")
+        self.response.write(login_template.render({'log_url': log_url}))
 
 class QueueHandler(webapp2.RequestHandler) :
     def get(self):
@@ -59,10 +60,12 @@ class QueueHandler(webapp2.RequestHandler) :
 
 class RestNewHandler(webapp2.RequestHandler):
     def get(self):
+        #render's html page for new restaurant handler
         new_r_template=jinja_current_directory.get_template("templates/restaurant_new.html")
         self.response.write(new_r_template.render())
 
     def post(self):
+        #creates new Restaurant item upon post request to /new_rest url and adds to Datastore
         user = users.get_current_user()
         Restaurant(name = self.request.get('name_r'),
             phone = self.request.get('phone_r'),
