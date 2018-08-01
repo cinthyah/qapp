@@ -25,7 +25,7 @@ class Table(ndb.Model):
 
 class Wait(ndb.Model):
     customer = ndb.StringProperty(required=True)
-    phone = ndb.StringProperty(requried=True)
+    phone = ndb.StringProperty(required=True)
     party_size = ndb.StringProperty(required=True)
     restaurant_key = ndb.KeyProperty(Restaurant)
     table_type = ndb.KeyProperty(Table)

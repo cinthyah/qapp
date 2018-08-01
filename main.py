@@ -35,10 +35,17 @@ jinja_current_directory= jinja2.Environment(
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
+        #if statement that checks if user is logged in via google
         if user:
             log_url = users.create_logout_url('/')
-            if user
-            self.redirect('/r_home')
+            #check if user is in Restaurant Datastore already/is a returning user
+            user_email = user.user_email()
+            rest_query =Restaurant.query(Restaurant.user == user_email).fetch()
+            #if user email is in Restaurant Datastore go to home page/ else send to new restaurant handler
+            if rest_query[0].user != None :
+                self.redirect('/new_rest')
+            else:
+                self.redirect('/r_home')
 
         else:
             log_url = users.create_login_url('/')
