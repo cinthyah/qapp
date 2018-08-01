@@ -2,6 +2,7 @@ import webapp2
 import json
 import jinja2
 import os
+import seed_q
 from google.appengine.api import users
 from models import Restaurant,Table,Wait
 import datetime
@@ -137,13 +138,19 @@ class LoadDataHandler(webapp2.RequestHandler):
 
 class ActiveQHandler(webapp2.RequestHandler):
     def get (self):
-        customer = self.request.get('customer')
-        customer_query = Wait.query(Wait.customer == customer_q).order().fetch()
-        template_vars = {
-        "customers" : customer_query
-        }
-        activeq_template = jinja_current_directory.get_template("templates/active_q")
-        self.response.write(activeq_template.render(template_vars))
+        user = users.get_current_user()
+        restaurant = Restaurant.query(Restaurant.user == user.email()).fetch(1)
+        if restaurant:
+            restaurant = restaurant[0]
+            waits = Wait.query(Wait.restaurant_key == restaurant.key).order().fetch()
+            template_vars = {
+                "waits" : waits,
+                "restaurant": restaurant,
+            }
+            activeq_template = jinja_current_directory.get_template("templates/active_q.html")
+            self.response.write(activeq_template.render(template_vars))
+        else:
+            self.response.write(users.create_logout_url('/'))
 
 
 
