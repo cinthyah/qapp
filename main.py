@@ -4,6 +4,7 @@ import jinja2
 import os
 from google.appengine.api import users
 import models
+import seed_q
 #from twilio.rest import Client
 
 
@@ -70,13 +71,17 @@ class RestNewHandler(webapp2.RequestHandler):
             city = self.request.get('city'),
             state = self.request.get('state'),
             zip_code = self.request.get('zip'),
-            user = user.user_email(),
-        ).put()
+            user = user.email(),
+            ).put()
 
+class LoadDataHandler(webapp2.RequestHandler):
+    def get(self):
+        seed_q.seed_data()
 
 
 app = webapp2.WSGIApplication([
     ('/',LoginHandler),
     ('/r_home', HomeHandler),
     ('/new_rest', RestNewHandler),
+    ('/seed-data', LoadDataHandler),
 ], debug=True)

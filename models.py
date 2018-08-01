@@ -16,7 +16,6 @@ class Restaurant(ndb.Model):
     user = ndb.StringProperty(required=True)
 
 class Table(ndb.Model):
-    description = ndb.StringProperty(required=True)
     max= ndb.StringProperty(required=True)
     min=ndb.StringProperty(required=False)
     restaurant_id = ndb.KeyProperty(Restaurant)
