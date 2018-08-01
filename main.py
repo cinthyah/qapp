@@ -48,23 +48,23 @@ class RestNewHandler(webapp2.RequestHandler):
         self.response.write(new_r_template.render())
 
     def post(self):
-        Restaurant(name = self.request.get('name_r'),
+        user = users.get_current_user()
+        models.Restaurant(name = self.request.get('name_r'),
             phone = self.request.get('phone_r'),
             street_address= self.request.get('street'),
             city = self.request.get('city'),
             state = self.request.get('state'),
             zip_code = self.request.get('zip'),
-            user = user.user_email(),
+            user = user.email(),
         ).put()
 
-        Table(description = self.request.get('table_description'),
+        models.Table(description = self.request.get('table_description'),
             max = self.request.get('table_size_max'),
             min = self.request.get('table_size_min'),
             #restaurant_id = self.request.get(),
             full = False,
             time_filled = datetime.now(),
         ).put()
-
 
 app = webapp2.WSGIApplication([
     ('/',LoginHandler),
