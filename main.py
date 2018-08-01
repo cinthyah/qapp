@@ -3,7 +3,8 @@ import json
 import jinja2
 import os
 from google.appengine.api import users
-import models
+from models import Restaurant,Table,Wait
+import datetime
 #from twilio.rest import Client
 
 
@@ -28,8 +29,6 @@ jinja_current_directory= jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
-
-
 
 
 class LoginHandler(webapp2.RequestHandler):
@@ -79,17 +78,23 @@ class RestNewHandler(webapp2.RequestHandler):
         self.response.write(new_r_template.render())
 
     def post(self):
-        #creates new Restaurant item upon post request to /new_rest url and adds to Datastore
-        user=users.get_current_user()
-        Restaurant(name=self.request.get('name_r'),
-            phone=self.request.get('phone_r'),
-            street_address=self.request.get('street'),
-            city=self.request.get('city'),
-            state=self.request.get('state'),
-            zip_code=self.request.get('zip'),
-            user=user.user_email(),
+        user = users.get_current_user()
+        Restaurant(name = self.request.get('name_r'),
+            phone = self.request.get('phone_r'),
+            street_address = self.request.get('street'),
+            city = self.request.get('city'),
+            state = self.request.get('state'),
+            zip_code = self.request.get('zip'),
+            user = user.email(),
         ).put()
 
+        Table(description = self.request.get('table_description'),
+            max = self.request.get('table_size_max'),
+            min = self.request.get('table_size_min'),
+            #restaurant_id = self.request.get(),
+            full = False,
+            time_filled = datetime.datetime.now(),
+        ).put()
 
 
 app=webapp2.WSGIApplication([
