@@ -10,8 +10,8 @@
   border: solid thin black;
   grid-column: 2 / 3;
   grid-row: 1 / 4;
-  height: 400px;
-  width: 350px;
+  height: 50px;
+  width: 100px;
 }
 
 /*create color tags for open/closed tables*/
