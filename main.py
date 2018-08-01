@@ -4,6 +4,7 @@ import jinja2
 import os
 from google.appengine.api import users
 import models
+import datetime
 #from twilio.rest import Client
 
 
@@ -30,14 +31,12 @@ jinja_current_directory= jinja2.Environment(
     autoescape=True)
 
 
-
-
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
             url = users.create_logout_url('/')
-            
+
         else:
             url = users.create_login_url('/')
         new_r_template=jinja_current_directory.get_template("templates/login2.html")
@@ -55,6 +54,15 @@ class RestNewHandler(webapp2.RequestHandler):
             city = self.request.get('city'),
             state = self.request.get('state'),
             zip_code = self.request.get('zip'),
+            user = user.user_email(),
+        ).put()
+
+        Table(description = self.request.get('table_description'),
+            max = self.request.get('table_size_max'),
+            min = self.request.get('table_size_min'),
+            #restaurant_id = self.request.get(),
+            full = False,
+            time_filled = datetime.now(),
         ).put()
 
 
