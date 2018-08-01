@@ -43,9 +43,9 @@ class LoginHandler(webapp2.RequestHandler):
             rest_query =Restaurant.query(Restaurant.user == user_email).fetch()
             #if user email is in Restaurant Datastore go to home page/ else send to new restaurant handler
             if rest_query[0].user != None :
-                self.redirect('/new_rest')
-            else:
                 self.redirect('/r_home')
+            else:
+                self.redirect('/new_rest')
 
         else:
             log_url = users.create_login_url('/')
