@@ -5,6 +5,7 @@ import os
 from google.appengine.api import users
 from models import Restaurant,Table,Wait
 import datetime
+import seed_q
 #from twilio.rest import Client
 
 
@@ -138,21 +139,24 @@ class LoadDataHandler(webapp2.RequestHandler):
 class ActiveQHandler(webapp2.RequestHandler):
     def get (self):
         customer = self.request.get('customer')
-        customer_query = Wait.query(Wait.customer == customer_q).order().fetch()
+        wait_query = Wait.query().order(Wait.time).fetch()
         template_vars = {
-        "customers" : customer_query
+        "waits" : wait_query
         }
-        activeq_template = jinja_current_directory.get_template("templates/active_q")
+        activeq_template = jinja_current_directory.get_template("templates/active_q.html")
         self.response.write(activeq_template.render(template_vars))
 
-
-
-
+class DeleteWaitHandler(webapp2.RequestHandler):
+    def get(self):
+        wait = self.request.get('wait_id')
+        delete = Wait.query().delete()
+        
 app=webapp2.WSGIApplication([
     ('/',LoginHandler),
     ('/new_rest', RestNewHandler),
     ('/new_cust', CustNewHandler),
-    ('/tables', TablesHandler)
+    ('/tables', TablesHandler),
     ('/seed-data', LoadDataHandler),
     ('/a_queue', ActiveQHandler),
+    ('/delete', DeleteWaitHandler),
 ], debug=True)

@@ -4,7 +4,8 @@
 </head>
 <body>
   <h1>Customer's Waiting For a Table</h1>
-  {% for customer in customers %}
-  <div>{{Wait.customer}}</div>
-  <a href = "/delete-customer?id= {{customer.key.id}}">Delete Customer</a>
+  {% for wait in waits %}
+  <div>{{wait.customer}}</div>
+  <a href = "/delete-customer?wait_id={{wait.key.id()}}">Delete Customer</a>
+  {% endfor %}
 </body>
