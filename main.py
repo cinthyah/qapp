@@ -144,8 +144,8 @@ class ActiveQHandler(webapp2.RequestHandler):
             restaurant = restaurant[0]
             waits = Wait.query(Wait.restaurant_key == restaurant.key).order().fetch()
             template_vars = {
-            "waits" : waits,
-            "restaurant": restaurant,
+                "waits" : waits,
+                "restaurant": restaurant,
             }
             activeq_template = jinja_current_directory.get_template("templates/active_q.html")
             self.response.write(activeq_template.render(template_vars))

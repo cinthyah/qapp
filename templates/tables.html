@@ -8,10 +8,11 @@
 
 
     <h1>Tables</h1>
+      {% for customer in customers %}
     <div class="container">
       <div id="tableBox">Table</div>
       <button id='{{btn_tag}}'>Seat</button>
-      <a href="/update_table_use"?table_id =
+      <a href="/update_table_use?table_id = {{Table.key}}"
 
     </div>
 
