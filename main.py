@@ -3,7 +3,7 @@ import json
 import jinja2
 import os
 from google.appengine.api import users
-import models
+from models import Restaurant,Table,Wait
 import datetime
 #from twilio.rest import Client
 
