@@ -23,14 +23,14 @@ def seed_data():
     cheese3_table_key = Table(max = "2", min = "1", full = False).put()
 
     #wait
-    shake_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5",time = datetime.datetime.now()).put()
-    shake_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2",time = datetime.datetime.now()).put()
-    shake_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4",time = datetime.datetime.now()).put()
+    shake_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5",restaurant_key = shake_key).put()
+    shake_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2",restaurant_key = shake_key).put()
+    shake_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4",restaurant_key = shake_key).put()
 
-    in_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5", time = datetime.datetime.now()).put()
-    in_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2", time = datetime.datetime.now()).put()
-    in_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4", time = datetime.datetime.now()).put()
+    in_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5",restaurant_key = in_key).put()
+    in_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2",restaurant_key = in_key).put()
+    in_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4",restaurant_key = in_key).put()
 
-    cheese_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5", time = datetime.datetime.now()).put()
-    cheese_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2", time = datetime.datetime.now()).put()
-    cheese_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4", time = datetime.datetime.now()).put()
+    cheese_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5", restaurant_key = cheese_key).put()
+    cheese_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2", restaurant_key = cheese_key).put()
+    cheese_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4", restaurant_key = cheese_key).put()
