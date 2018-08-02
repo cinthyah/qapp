@@ -61,8 +61,12 @@ class LoginHandler(webapp2.RequestHandler):
 class RestNewHandler(webapp2.RequestHandler):
     def get(self):
         #render's html page for new restaurant handler
+        log_url = users.create_logout_url('/')
+        template_vars ={
+        "log_url":log_url
+        }
         new_r_template=jinja_current_directory.get_template("templates/restaurant_new.html")
-        self.response.write(new_r_template.render())
+        self.response.write(new_r_template.render(template_vars))
 
     def post(self):
         user = users.get_current_user()
