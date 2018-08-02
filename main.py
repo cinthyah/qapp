@@ -8,6 +8,7 @@ import time
 from models import Restaurant,Table,Wait
 import datetime
 import seed_q
+import logging
 #from twilio.rest import Client
 
 #
@@ -46,7 +47,7 @@ class LoginHandler(webapp2.RequestHandler):
             rest_query =Restaurant.query(Restaurant.user == user_email).fetch()
             #if user email is in Restaurant Datastore go to home page/ else send to new restaurant handler
             if rest_query[0].user != None :
-                self.redirect('/r_home')
+                self.redirect('/tables')
             else:
                 self.redirect('/new_rest')
         #if user not logged into google, generates login
@@ -121,8 +122,7 @@ class TablesHandler(webapp2.RequestHandler):
         restaurant = Restaurant.query(Restaurant.user == user.email()).fetch()
         if restaurant:
             restaurant = restaurant[0]
-            tables = Table.query(Table.restaurant_id == restaurant.key).order().fetch()
-            print '#tables' + str(len(tables))
+            tables = Table.query(Table.restaurant_id == restaurant.key).order(Table.time_filled).fetch()
             template_vars = {
             "tables" : tables,
             "restaurant":restaurant,
@@ -164,17 +164,21 @@ class DeleteWaitHandler(webapp2.RequestHandler):
         self.redirect("/a_queue")
 
 class UpTabUseHandler(webapp2.RequestHandler):
-    def get(self):
-        used = self.response.get('used')
-        table_id = self.response.get('table_id')
+    def get (self):
+        used = self.request.get('used')
+        table_id = self.request.get('table_id')
+        logging.info(table_id)
+        #uses value to be not value that was
         if used == 'True':
             table = Table.get_by_id(table_id)
             table.full= True
             table.put()
+            self.redirect("/table")
         else:
             table = Table.get_by_id(table_id)
             table.full= False
             table.put()
+            self.redirect("/table")
 
 
 app=webapp2.WSGIApplication([

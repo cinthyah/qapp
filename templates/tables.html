@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>title</title>
+    <title>Tables Manager</title>
   <link rel="stylesheet" href="tables.css">
   </head>
   <body>
@@ -9,12 +9,19 @@
 
     <h1>Tables for {{restaurant.name}}</h1>
     {% for table in tables %}
-    <div>{{table.restaurant_id}}</div>
-      <a href = "/update_table_use?table_id={{table.key}}&used=!{{table.full}}">Change table.full</a>
+
+    <br />
+      <div class="tableBox">{{table.table_name}}</div>
+      <div>Seats:{{table.max}}</div>
+      <div>full?: {{table.full}}</div>
+      <div>time_filled: {{table.time_filled}}</div>
+        <button href = "/update_table_use?table_id={{table.key.id()}}&used={{table.full==True}}">Change table.full</button>
+    <br />
+
     {% endfor %}
 
 
-  <script src="table.js"></script>
+  <script src="tables.js"></script>
   <body style="background-color:beige";>
   </body>
 </html>
