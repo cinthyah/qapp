@@ -3,6 +3,9 @@
   <title>Active Queue</title>
 </head>
 <body>
+  <a href="{{log_url}}">Logout</a>
+  <br />
+
   <script>
   function notifyCustomer(number) {
     const accountSid = "{{twilio_account_sid}}";
@@ -22,11 +25,16 @@
   }
   </script>
   <h1>Customers Waiting For a Table at {{restaurant.name}}</h1>
+  <br />
+  <a href="/tables">Return to tables</a>
+  <br />
   {% for wait in waits %}
+  <br />
   <div>{{wait.customer}}</div>
   <a href = "/delete?wait_id={{wait.key.urlsafe()}}">Delete Customer</a>
   <div>{{wait.number}}</div>
   <a href = "#" onclick = "notifyCustomer({{wait.phone}})">Notify Customer</a>
+  <br />
   {% endfor %}
 <body style="background-color: turquoise;">
 </body>

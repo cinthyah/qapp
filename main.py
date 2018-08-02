@@ -137,6 +137,7 @@ class ActiveQHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         restaurant = Restaurant.query(Restaurant.user == user.email()).fetch()
         if restaurant:
+            log_url = users.create_logout_url('/')
             restaurant = restaurant[0]
             waits = Wait.query(Wait.restaurant_key == restaurant.key).order().fetch()
             template_vars = {
@@ -144,6 +145,7 @@ class ActiveQHandler(webapp2.RequestHandler):
             "restaurant":restaurant,
             "twilio_account_sid":SECRETS["twilio_account_sid"],
             "twilio_auth_token":SECRETS["twilio_auth_token"],
+            "log_url":log_url,
              }
 
             activeq_template = jinja_current_directory.get_template("templates/active_q.html")
