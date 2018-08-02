@@ -22,6 +22,10 @@ def seed_data():
     cheese2_table_key = Table(max = "4", min = "2", full = False).put()
     cheese3_table_key = Table(max = "2", min = "1", full = False).put()
 
+    blaze1_table_key = Table(max = "5", min = "2", full = False).put()
+    blaze2_table_key = Table(max = "4", min = "2", full = False).put()
+    blaze3_table_key = Table(max = "2", min = "1", full = False).put()
+
     #wait
     shake_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5",restaurant_key = shake_key).put()
     shake_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2",restaurant_key = shake_key).put()
@@ -34,3 +38,7 @@ def seed_data():
     cheese_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5", restaurant_key = cheese_key).put()
     cheese_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2", restaurant_key = cheese_key).put()
     cheese_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4", restaurant_key = cheese_key).put()
+
+    blaze_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5", restaurant_key = cheese_key).put()
+    blaze_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2", restaurant_key = cheese_key).put()
+    blaze_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4", restaurant_key = cheese_key).put()

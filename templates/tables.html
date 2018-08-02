@@ -7,14 +7,12 @@
   <body>
 
 
-    <h1>Tables</h1>
-      {% for customer in customers %}
-    <div class="container">
-      <div id="tableBox">Table</div>
-      <button id='{{btn_tag}}'>Seat</button>
-      <a href="/update_table_use?table_id = {{Table.key}}"
+    <h1>Tables for {{restaurant.name}}</h1>
+    {% for table in tables %}
+    <div>{{table.restaurant_id}}</div>
+    <a href = "/update_table_use?id={{tables.key.id}}">Change table.full</a>
+    {% endfor %}
 
-    </div>
 
   <script src="table.js"></script>
   <body style="background-color:beige";>
