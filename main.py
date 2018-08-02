@@ -113,7 +113,7 @@ class TablesHandler(webapp2.RequestHandler):
             template_vars = {
             "tables" : tables,
             "restaurant":restaurant,
-            "log_url":log_url
+            "log_url":log_url,
             }
             tables_template=jinja_current_directory.get_template("templates/tables.html")
             self.response.write(tables_template.render(template_vars))
@@ -155,19 +155,19 @@ class DeleteWaitHandler(webapp2.RequestHandler):
 class UpTabUseHandler(webapp2.RequestHandler):
     def get (self):
         used = self.request.get('used')
-        table_id = self.request.get('table_id')
-        logging.info(table_id)
+        table_key = ndb.Key(urlsafe = self.request.get('table_id'))
+        logging.info(table_key)
         #uses value to be not value that was
+        table = table_key.get()
         if used == 'False':
-            table = Table.get_by_id(table_id)
+            #table = Table.get_by_id(table_id)
             table.full= True
-            table.put()
-            self.redirect("/table")
         else:
-            table = Table.get_by_id(table_id)
+            #table = Table.get_by_id(table_id)
             table.full= False
-            table.put()
-            self.redirect("/table")
+        table.put()
+        time.sleep(0.5)
+        self.redirect("/tables")
 
 
 app=webapp2.WSGIApplication([

@@ -15,7 +15,7 @@
       <div>Seats:{{table.max}}</div>
       <div>full?: {{table.full}}</div>
       <div>time_filled: {{table.time_filled}}</div>
-        <button href = "/update_table_use?table_id={{table.key.id()}}&used={{table.full}}">Change table.full</button>
+        <a href = "/update_table_use?table_id={{table.key.urlsafe()}}&used={{table.full}}">Change table.full</a>
     <br />
 
     {% endfor %}
