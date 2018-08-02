@@ -8,9 +8,7 @@ import time
 from models import Restaurant,Table,Wait
 import datetime
 import seed_q
-
 import json
-
 import logging
 #from twilio.rest import Client
 
