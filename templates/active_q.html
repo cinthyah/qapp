@@ -3,11 +3,30 @@
   <title>Active Queue</title>
 </head>
 <body>
+  <script>
+  function notifyCustomer(number) {
+    const accountSid = "{{twilio_account_sid}}";
+    const authToken = "{{twilio_auth_token}}";
+
+    let params = new URLSearchParams()
+    params.append("Body","Your table will be ready in five minutes");
+    params.append("From", "17472325261");
+    params.append("To", number);
+
+    let headers = new Headers();
+    headers.append('Authorization', 'Basic ' + btoa("{{twilio_account_sid}}" + ':' + "{{twilio_auth_token}}"));
+
+    fetch("https://api.twilio.com/2010-04-01/Accounts/{{twilio_account_sid}}/Messages.json",
+          {body:params, method: "POST", headers: headers}).then(data => console.log(data.json()))
+    .done();
+  }
+  </script>
   <h1>Customers Waiting For a Table at {{restaurant.name}}</h1>
   {% for wait in waits %}
   <div>{{wait.customer}}</div>
   <a href = "/delete?wait_id={{wait.key.urlsafe()}}">Delete Customer</a>
   <div>{{wait.number}}</div>
-  <a href = "/notify-customer?id={{wait.key.urlsafe()}}">Notify Customer</a>
+  <a href = "#" onclick = "notifyCustomer({{wait.phone}})">Notify Customer</a>
   {% endfor %}
+
 </body>

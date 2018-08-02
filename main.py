@@ -8,21 +8,8 @@ import time
 from models import Restaurant,Table,Wait
 import datetime
 import seed_q
-#from twilio.rest import Client
+import json
 
-#
-#account_sid="ACfe3c09107ca923f7c8425fc58cbf0fc4"
-#auth_token="e32ae179c853e667d8f5fc135d89c0aa"
-#client=Client(account_sid, auth_token)
-
-
-#message=client.messages.create(
-                              #body='Your table will be ready in five minutes',
-                              #from_='17472325261',
-                              #to='13107176463'#have to add variable here
-                          #)
-
-#print(message.sid)
 
 
 #class MainPage(webapp2.RequestHandler):
@@ -34,6 +21,9 @@ jinja_current_directory= jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+secrets_file = open('app-secrets.json')
+SECRETS = json.load(secrets_file)
+secrets_file.close()
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
@@ -148,7 +138,10 @@ class ActiveQHandler(webapp2.RequestHandler):
             template_vars = {
             "waits" : waits,
             "restaurant":restaurant,
+            "twilio_account_sid":SECRETS["twilio_account_sid"],
+            "twilio_auth_token":SECRETS["twilio_auth_token"],
              }
+
             activeq_template = jinja_current_directory.get_template("templates/active_q.html")
             self.response.write(activeq_template.render(template_vars))
         else:
@@ -161,6 +154,10 @@ class DeleteWaitHandler(webapp2.RequestHandler):
         wait_key.delete()
         time.sleep(0.5)
         self.redirect("/a_queue")
+
+class NotifyHandler(webapp2.RequestHandler):
+    def get(self):
+        pass
 
 app=webapp2.WSGIApplication([
     ('/',LoginHandler),
