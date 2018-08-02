@@ -162,6 +162,20 @@ class DeleteWaitHandler(webapp2.RequestHandler):
         time.sleep(0.5)
         self.redirect("/a_queue")
 
+class UpTabUseHandler(webapp2.RequestHandler):
+    def get(self):
+        used = self.response.get('used')
+        table_id = self.response.get('table_id')
+        if used == 'True':
+            table = Table.get_by_id(table_id)
+            table.full= True
+            table.put()
+        else:
+            table = Table.get_by_id(table_id)
+            table.full= False
+            table.put()
+
+
 app=webapp2.WSGIApplication([
     ('/',LoginHandler),
     ('/new_rest', RestNewHandler),
@@ -170,4 +184,5 @@ app=webapp2.WSGIApplication([
     ('/seed-data', LoadDataHandler),
     ('/a_queue', ActiveQHandler),
     ('/delete', DeleteWaitHandler),
+    ('/update_table_use',UpTabUseHandler)
 ], debug=True)

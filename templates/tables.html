@@ -10,7 +10,7 @@
     <h1>Tables for {{restaurant.name}}</h1>
     {% for table in tables %}
     <div>{{table.restaurant_id}}</div>
-    <a href = "/update_table_use?id={{tables.key.id}}">Change table.full</a>
+      <a href = "/update_table_use?table_id={{table.key.id}}&used={{!table.full}}">Change table.full</a>
     {% endfor %}
 
 
