@@ -44,9 +44,9 @@ class LoginHandler(webapp2.RequestHandler):
             log_url=users.create_logout_url('/')
             #check if user is in Restaurant Datastore already/is a returning user
             user_email=user.email()
-            rest_query =Restaurant.query(Restaurant.user == user_email).fetch()
+            rest_query =Restaurant.query(Restaurant.user == user_email).fetch(1)
             #if user email is in Restaurant Datastore go to home page/ else send to new restaurant handler
-            if rest_query[0].user != None :
+            if rest_query != None :
                 self.redirect('/tables')
             else:
                 self.redirect('/new_rest')
@@ -102,14 +102,17 @@ class TablesHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         restaurant = Restaurant.query(Restaurant.user == user.email()).fetch()
         if restaurant:
+            log_url = users.create_logout_url('/')
             restaurant = restaurant[0]
             tables = Table.query(Table.restaurant_id == restaurant.key).order(Table.time_filled).fetch()
             template_vars = {
             "tables" : tables,
             "restaurant":restaurant,
+            "log_url":log_url
             }
             tables_template=jinja_current_directory.get_template("templates/tables.html")
             self.response.write(tables_template.render(template_vars))
+
         else:
             self.response.write(users.create_logout_url('/'))
 
@@ -150,7 +153,7 @@ class UpTabUseHandler(webapp2.RequestHandler):
         table_id = self.request.get('table_id')
         logging.info(table_id)
         #uses value to be not value that was
-        if used == 'True':
+        if used == 'False':
             table = Table.get_by_id(table_id)
             table.full= True
             table.put()
