@@ -3,10 +3,6 @@ import datetime
 
 def seed_data():
     #restaurants
-<<<<<<< HEAD
-=======
-
->>>>>>> 5339db821f001d14f00f741deccbdd7a23142b45
     shake_key = Restaurant(name = "Shake Shack", phone = "3234883010", street_address = "8520 Santa Monica Blvd", city = "West Hollywood", state = "CA", zip_code = "90069", user = "shake@gmail.com").put()
     in_key = Restaurant(name = "In n Out", phone = "8007861000", street_address = "13425 Washington Blvd", city = "Marina Del Rey", state = "CA", zip_code = "90292", user = "innout@gmail.com").put()
     cheese_key = Restaurant(name = "Cheescake Factory", phone = "3102601296", street_address = "395 Santa Monica Place", city = "Santa Monica", state = "CA", zip_code = "90401", user = "cheesecake@gmail.com").put()
