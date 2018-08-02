@@ -6,7 +6,7 @@
   margin: 25px;
 }
 
-#tableBox {
+.tableBox {
   border: solid thin black;
   grid-column: 2 / 3;
   grid-row: 1 / 4;

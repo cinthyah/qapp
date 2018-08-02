@@ -8,7 +8,24 @@ import time
 from models import Restaurant,Table,Wait
 import datetime
 import seed_q
+<<<<<<< HEAD
 import json
+=======
+import logging
+#from twilio.rest import Client
+
+#
+#account_sid="ACfe3c09107ca923f7c8425fc58cbf0fc4"
+#auth_token="e32ae179c853e667d8f5fc135d89c0aa"
+#client=Client(account_sid, auth_token)
+
+
+#message=client.messages.create(
+                              #body='Your table will be ready in five minutes',
+                              #from_='17472325261',
+                              #to='13107176463'#have to add variable here
+                          #)
+>>>>>>> 6baf8fd7e335fe60b703cd3d9882d03d9f18e269
 
 
 
@@ -33,10 +50,11 @@ class LoginHandler(webapp2.RequestHandler):
             log_url=users.create_logout_url('/')
             #check if user is in Restaurant Datastore already/is a returning user
             user_email=user.email()
-            rest_query =Restaurant.query(Restaurant.user == user_email).fetch()
+            rest_query =Restaurant.query(Restaurant.user == user_email).fetch(1)
+
             #if user email is in Restaurant Datastore go to home page/ else send to new restaurant handler
-            if rest_query[0].user != None :
-                self.redirect('/r_home')
+            if rest_query != [] :
+                self.redirect('/tables')
             else:
                 self.redirect('/new_rest')
         #if user not logged into google, generates login
@@ -46,30 +64,15 @@ class LoginHandler(webapp2.RequestHandler):
         login_template=jinja_current_directory.get_template("templates/login2.html")
         self.response.write(login_template.render({'log_url': log_url}))
 
-
-class QueueHandler(webapp2.RequestHandler) :
-    def get(self):
-        #get key of current restuaruant
-        r_key=Restaurant.query(Restaurant.user == user_email).fetch()[0].key
-        #fetch all tables that belong to this restaurant from Datastore (ordered by # seats at table)
-        r_tables=Table.query(Table.restaurant_id == r_key).order(Table.max).fetch()
-        #create empty dictionary table seats
-        table_seats= {}
-        #run through r_tables appending key value pairs of table number and max seats available per table
-        table_n=0
-        for table in r_tables:
-            n= n+1
-            table_seats['Table'+ n]=table.max
-        #render html of queue
-        queue_template=jinja_current_directory.get_template('templates/active_q.html')
-        self.response.write(login_template.render(table_seats))
-
-
 class RestNewHandler(webapp2.RequestHandler):
     def get(self):
         #render's html page for new restaurant handler
+        log_url = users.create_logout_url('/')
+        template_vars ={
+        "log_url":log_url
+        }
         new_r_template=jinja_current_directory.get_template("templates/restaurant_new.html")
-        self.response.write(new_r_template.render())
+        self.response.write(new_r_template.render(template_vars))
 
     def post(self):
         user = users.get_current_user()
@@ -110,14 +113,17 @@ class TablesHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         restaurant = Restaurant.query(Restaurant.user == user.email()).fetch()
         if restaurant:
+            log_url = users.create_logout_url('/')
             restaurant = restaurant[0]
-            tables = Table.query(Table.restaurant_id == restaurant.key).order().fetch()
+            tables = Table.query(Table.restaurant_id == restaurant.key).order(Table.time_filled).fetch()
             template_vars = {
             "tables" : tables,
             "restaurant":restaurant,
+            "log_url":log_url,
             }
             tables_template=jinja_current_directory.get_template("templates/tables.html")
             self.response.write(tables_template.render(template_vars))
+
         else:
             self.response.write(users.create_logout_url('/'))
 
@@ -155,9 +161,29 @@ class DeleteWaitHandler(webapp2.RequestHandler):
         time.sleep(0.5)
         self.redirect("/a_queue")
 
+<<<<<<< HEAD
 class NotifyHandler(webapp2.RequestHandler):
     def get(self):
         pass
+=======
+class UpTabUseHandler(webapp2.RequestHandler):
+    def get (self):
+        used = self.request.get('used')
+        table_key = ndb.Key(urlsafe = self.request.get('table_id'))
+        logging.info(table_key)
+        #uses value to be not value that was
+        table = table_key.get()
+        if used == 'False':
+            #table = Table.get_by_id(table_id)
+            table.full= True
+        else:
+            #table = Table.get_by_id(table_id)
+            table.full= False
+        table.put()
+        time.sleep(0.5)
+        self.redirect("/tables")
+
+>>>>>>> 6baf8fd7e335fe60b703cd3d9882d03d9f18e269
 
 app=webapp2.WSGIApplication([
     ('/',LoginHandler),
@@ -167,4 +193,5 @@ app=webapp2.WSGIApplication([
     ('/seed-data', LoadDataHandler),
     ('/a_queue', ActiveQHandler),
     ('/delete', DeleteWaitHandler),
+    ('/update_table_use',UpTabUseHandler)
 ], debug=True)

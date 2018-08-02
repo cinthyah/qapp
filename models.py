@@ -17,7 +17,7 @@ class Restaurant(ndb.Model):
 
 class Table(ndb.Model):
     max= ndb.StringProperty(required=True)
-    min=ndb.StringProperty(required=False)
+    table_name=ndb.StringProperty(required=False)
     restaurant_id = ndb.KeyProperty(Restaurant)
     full = ndb.BooleanProperty(required=True)
     time_filled = ndb.DateTimeProperty(required=False)

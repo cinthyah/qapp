@@ -9,22 +9,22 @@ def seed_data():
     blaze_key = Restaurant(name = "Blaze Pizza", phone = "3103400638", street_address = "4114 Sepulveda Blvd", city = "Culver City", state = "CA", zip_code = "90230", user = "blaze@gmail.com").put()
 
     #tables
-    shake1_table_key = Table(max = "5", min = "2", restaurant_id = shake_key, full = False).put()
-    shake2_table_key = Table(max = "2", min = "1", restaurant_id = shake_key, full = False).put()
-    shake3_table_key = Table(max = "4", min = "2", restaurant_id = shake_key, full = False).put()
-    shake4_table_key = Table(max = "5", min = "2", restaurant_id = shake_key, full = False).put()
+    shake1_table_key = Table(max = "5", table_name = "table1", restaurant_id = shake_key, full = False).put()
+    shake2_table_key = Table(max = "2", table_name = "table2", restaurant_id = shake_key, full = False).put()
+    shake3_table_key = Table(max = "4", table_name = "table3", restaurant_id = shake_key, full = False).put()
+    shake4_table_key = Table(max = "5", table_name = "table4", restaurant_id = shake_key, full = False).put()
 
-    in1_table_key = Table(max = "5", min = "2", restaurant_id = in_key, full = False).put()
-    in2_table_key = Table(max = "4", min = "2", restaurant_id = in_key, full = False).put()
-    in3_table_key = Table(max = "2", min = "1", restaurant_id = in_key, full = False).put()
+    in1_table_key = Table(max = "5", table_name = "table1", restaurant_id = in_key, full = False).put()
+    in2_table_key = Table(max = "4", table_name = "table2", restaurant_id = in_key, full = False).put()
+    in3_table_key = Table(max = "2", table_name = "table3", restaurant_id = in_key, full = False).put()
 
-    cheese1_table_key = Table(max = "5", min = "2", restaurant_id = cheese_key, full = False).put()
-    cheese2_table_key = Table(max = "4", min = "2", restaurant_id = cheese_key, full = False).put()
-    cheese3_table_key = Table(max = "2", min = "1", restaurant_id = cheese_key, full = False).put()
+    cheese1_table_key = Table(max = "5", table_name = "table1", restaurant_id = cheese_key, full = False).put()
+    cheese2_table_key = Table(max = "4", table_name = "table2", restaurant_id = cheese_key, full = False).put()
+    cheese3_table_key = Table(max = "2", table_name = "table3", restaurant_id = cheese_key, full = False).put()
 
-    blaze1_table_key = Table(max = "5", min = "2", restaurant_id = blaze_key, full = False).put()
-    blaze2_table_key = Table(max = "4", min = "2", restaurant_id = blaze_key, full = False).put()
-    blaze3_table_key = Table(max = "2", min = "1", restaurant_id = blaze_key, full = False).put()
+    blaze1_table_key = Table(max = "5", table_name = "table1", restaurant_id = blaze_key, full = False).put()
+    blaze2_table_key = Table(max = "4", table_name = "table2", restaurant_id = blaze_key, full = False).put()
+    blaze3_table_key = Table(max = "2", table_name = "table3", restaurant_id = blaze_key, full = False).put()
 
     #wait
     shake_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5",restaurant_key = shake_key).put()
