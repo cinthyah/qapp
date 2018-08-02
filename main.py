@@ -3,15 +3,18 @@ import json
 import jinja2
 import os
 from google.appengine.api import users
+from google.appengine.ext import ndb
+import time
 from models import Restaurant,Table,Wait
 import datetime
 import seed_q
 #from twilio.rest import Client
 
-
+#
 #account_sid="ACfe3c09107ca923f7c8425fc58cbf0fc4"
 #auth_token="e32ae179c853e667d8f5fc135d89c0aa"
 #client=Client(account_sid, auth_token)
+
 
 #message=client.messages.create(
                               #body='Your table will be ready in five minutes',
@@ -151,10 +154,13 @@ class ActiveQHandler(webapp2.RequestHandler):
         else:
             self.response.write(users.create_logout_url('/'))
 
+
 class DeleteWaitHandler(webapp2.RequestHandler):
     def get(self):
-        wait = self.request.get('wait_id')
-        delete = Wait.query().delete()
+        wait_key = ndb.Key(urlsafe=self.request.get('wait_id'))
+        wait_key.delete()
+        time.sleep(0.5)
+        self.redirect("/a_queue")
 
 app=webapp2.WSGIApplication([
     ('/',LoginHandler),

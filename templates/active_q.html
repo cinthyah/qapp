@@ -6,6 +6,8 @@
   <h1>Customers Waiting For a Table at {{restaurant.name}}</h1>
   {% for wait in waits %}
   <div>{{wait.customer}}</div>
-  <a href = "/delete-customer?id={{wait.key.id}}">Delete Customer</a>
+  <a href = "/delete?wait_id={{wait.key.urlsafe()}}">Delete Customer</a>
+  <div>{{wait.number}}</div>
+  <a href = "/notify-customer?id={{wait.key.urlsafe()}}">Notify Customer</a>
   {% endfor %}
 </body>
