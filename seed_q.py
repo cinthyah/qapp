@@ -35,10 +35,10 @@ def seed_data():
     in_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2",restaurant_key = in_key).put()
     in_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4",restaurant_key = in_key).put()
 
-    cheese_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5", restaurant_key = cheese_key).put()
-    cheese_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2", restaurant_key = cheese_key).put()
-    cheese_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4", restaurant_key = cheese_key).put()
+    cheese_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5", restaurant_key = blaze_key).put()
+    cheese_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2", restaurant_key = blaze_key).put()
+    cheese_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4", restaurant_key = blaze_key).put()
 
-    blaze_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5", restaurant_key = cheese_key).put()
-    blaze_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2", restaurant_key = cheese_key).put()
-    blaze_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4", restaurant_key = cheese_key).put()
+    blaze_c1_key = Wait(customer = "John Doe", phone = "3107176463", party_size = "5", restaurant_key = blaze_key).put()
+    blaze_c2_key = Wait(customer = "Jane Doe", phone = "3107176463", party_size = "2", restaurant_key = blaze_key).put()
+    blaze_c3_key = Wait(customer = "Bob", phone = "3107176463", party_size = "4", restaurant_key = blaze_key).put()

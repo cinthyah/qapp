@@ -8,8 +8,12 @@
     <a href="{{log_url}}">Logout</a>
 
     <h1>Tables for {{restaurant.name}}</h1>
-    {% for table in tables %}
 
+    <br />
+    <a href = "/a_queue">See Customers</a>
+
+    <br />
+    {% for table in tables %}
     <br />
       <div class="tableBox">{{table.table_name}}</div>
       <div>Seats:{{table.max}}</div>
