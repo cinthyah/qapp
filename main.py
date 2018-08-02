@@ -122,6 +122,7 @@ class TablesHandler(webapp2.RequestHandler):
         if restaurant:
             restaurant = restaurant[0]
             tables = Table.query(Table.restaurant_id == restaurant.key).order().fetch()
+            print '#tables' + str(len(tables))
             template_vars = {
             "tables" : tables,
             "restaurant":restaurant,
