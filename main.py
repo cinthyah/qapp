@@ -8,9 +8,7 @@ import time
 from models import Restaurant,Table,Wait
 import datetime
 import seed_q
-<<<<<<< HEAD
 import json
-=======
 import logging
 #from twilio.rest import Client
 
@@ -25,7 +23,7 @@ import logging
                               #from_='17472325261',
                               #to='13107176463'#have to add variable here
                           #)
->>>>>>> 6baf8fd7e335fe60b703cd3d9882d03d9f18e269
+
 
 
 
@@ -161,11 +159,11 @@ class DeleteWaitHandler(webapp2.RequestHandler):
         time.sleep(0.5)
         self.redirect("/a_queue")
 
-<<<<<<< HEAD
+
 class NotifyHandler(webapp2.RequestHandler):
     def get(self):
         pass
-=======
+
 class UpTabUseHandler(webapp2.RequestHandler):
     def get (self):
         used = self.request.get('used')
@@ -183,7 +181,7 @@ class UpTabUseHandler(webapp2.RequestHandler):
         time.sleep(0.5)
         self.redirect("/tables")
 
->>>>>>> 6baf8fd7e335fe60b703cd3d9882d03d9f18e269
+
 
 app=webapp2.WSGIApplication([
     ('/',LoginHandler),
