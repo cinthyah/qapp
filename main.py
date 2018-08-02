@@ -117,20 +117,19 @@ class CustNewHandler(webapp2.RequestHandler):
 
 class TablesHandler(webapp2.RequestHandler):
     def get(self):
-        new_r_template=jinja_current_directory.get_template("templates/tables.html")
-        self.response.write(new_r_template.render())
-        #get key of current restuaruant
-        r_key=Restaurant.query(Restaurant.user == user_email).fetch()[0].key #GETTING ERRORS FROM user_email
-        #fetch all tables that belong to this restaurant from Datastore (ordered by # seats at table)
-        r_tables=Table.query(Table.restaurant_id == r_key).order(Table.max).fetch()
-        #create empty dictionary table seats
-        table_seats= {}
-        #run through r_tables appending key value pairs of table number and max seats available per table
-        table_n=0
-        for table in r_tables:
-            n= n+1
-            table_seats['Table'+ n]=table.max
-        #render html of queue
+        user = users.get_current_user()
+        restaurant = Restaurant.query(Restaurant.user == user.email()).fetch()
+        if restaurant:
+            restaurant = restaurant[0]
+            tables = Table.query(Table.restaurant_id == restaurant.key).order().fetch()
+            template_vars = {
+            "tables" : tables,
+            "restaurant":restaurant,
+            }
+            tables_template=jinja_current_directory.get_template("templates/tables.html")
+            self.response.write(tables_template.render(template_vars))
+        else:
+            self.response.write(users.create_logout_url('/'))
 
     def post(self):
         pass
