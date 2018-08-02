@@ -57,25 +57,6 @@ class LoginHandler(webapp2.RequestHandler):
         login_template=jinja_current_directory.get_template("templates/login2.html")
         self.response.write(login_template.render({'log_url': log_url}))
 
-
-class QueueHandler(webapp2.RequestHandler) :
-    def get(self):
-        #get key of current restuaruant
-        r_key=Restaurant.query(Restaurant.user == user_email).fetch()[0].key
-        #fetch all tables that belong to this restaurant from Datastore (ordered by # seats at table)
-        r_tables=Table.query(Table.restaurant_id == r_key).order(Table.max).fetch()
-        #create empty dictionary table seats
-        table_seats= {}
-        #run through r_tables appending key value pairs of table number and max seats available per table
-        table_n=0
-        for table in r_tables:
-            n= n+1
-            table_seats['Table'+ n]=table.max
-        #render html of queue
-        queue_template=jinja_current_directory.get_template('templates/active_q.html')
-        self.response.write(login_template.render(table_seats))
-
-
 class RestNewHandler(webapp2.RequestHandler):
     def get(self):
         #render's html page for new restaurant handler
